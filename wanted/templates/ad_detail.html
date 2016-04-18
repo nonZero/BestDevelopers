@@ -1,0 +1,11 @@
+<a href="{% url "wanted:list" %}">Back to list</a>
+
+<h1>{{ object.title }}</h1>
+
+<i>{{ object.created_at }}</i>
+
+<p>
+    {{ object.description|linebreaksbr }}
+</p>
+
+{% lorem %}
