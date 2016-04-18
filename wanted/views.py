@@ -22,7 +22,7 @@ class AdMixin:
 
 
 class AdListView(AdMixin, ListView):
-    pass
+    paginate_by = 10
 
 
 class AdDetailView(AdMixin, DetailView):
