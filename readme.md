@@ -29,6 +29,20 @@ To create a super user:
 
     m createsuperuser
 
+## Running tests
+
+To run all tests:
+
+    m test
+
+To run tests for a specific app:
+
+    m test wanted
+
+To run tests in a specific module:
+
+    m test test_my_views
+
 ## Other links:
 
 - WSGI Example: <https://gist.github.com/nonZero/fd5c6ac97ce9ede20953c450e885bc5b>
