@@ -14,6 +14,4 @@ class ContactUsForm(forms.Form):
 class AdForm(forms.ModelForm):
     class Meta:
         model = models.Ad
-        exclude = (
-
-        )
+        exclude = ()

@@ -4,8 +4,10 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^$', views.ad_list, name="list"),
-    url(r'^(\d+)/$', views.ad_detail, name="detail"),
-    url(r'^add/$', views.ad_add, name="add"),
-    url(r'^contact/$', views.contact_us, name="contact"),
+    url(r'^$', views.AdListView.as_view(), name="list"),
+    url(r'^(?P<pk>\d+)/$', views.AdDetailView.as_view(), name="detail"),
+    url(r'^(?P<pk>\d+)/edit/$', views.AdUpdateView.as_view(), name="update"),
+    url(r'^(?P<pk>\d+)/delete/$', views.AdDeleteView.as_view(), name="delete"),
+    url(r'^add/$', views.AdCreateView.as_view(), name="add"),
+    url(r'^contact/$', views.ContactUsView.as_view(), name="contact"),
 ]

@@ -1,0 +1,9 @@
+
+Are you sure you want to delete {{ object }}?
+<form method="post">
+    {% csrf_token %}
+    <ul>
+        {{ form.as_ul }}
+        <button>Delete</button>
+    </ul>
+</form>

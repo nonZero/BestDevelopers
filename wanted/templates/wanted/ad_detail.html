@@ -8,4 +8,13 @@
     {{ object.description|linebreaksbr }}
 </p>
 
-{% lorem %}
+<a href="{% url "wanted:update" object.id %}">Edit</a>
+<br>
+<a href="{% url "wanted:delete" object.id %}">Delete</a>
+
+
+<br>
+<br>
+{{ view.title }}
+<br>
+{{ foo }}

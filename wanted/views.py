@@ -1,50 +1,51 @@
 import random
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
+from django.views.generic import FormView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
 
 from wanted import forms
 from . import models
 
-# ad = models.Ad.objects.get(id=12)
+
+class AdMixin:
+    model = models.Ad
+    title = "HELLO WORLD!"
 
 
-
-def ad_list(request):
-
-    ads = models.Ad.objects.all()
-
-    return render(request, "ad_list.html", {
-        'object_list': ads,
-    })
+    def get_context_data(self, **kwargs):
+        d = super().get_context_data(**kwargs)
+        d['foo'] = 1234
+        return d
 
 
-def ad_detail(request, id):
-    ad = models.Ad.objects.get(id=int(id))
-
-    return render(request, "ad_detail.html", {
-        'object': ad,
-    })
+class AdListView(AdMixin, ListView):
+    pass
 
 
-def ad_add(request):
-    if request.method == "POST":
-        form = forms.AdForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("wanted:list")
-    else:
-        form = forms.AdForm()
-    return render(request, "contact_us.html", {
-        'form': form,
-    })
+class AdDetailView(AdMixin, DetailView):
+    pass
 
-def contact_us(request):
-    if request.method == "POST":
-        form = forms.ContactUsForm(request.POST)
-        if form.is_valid():
-            # do something...
-            return redirect("wanted:list")
-    else:
-        form = forms.ContactUsForm()
-    return render(request, "contact_us.html", {
-        'form': form,
-    })
+
+class AdCreateView(AdMixin, CreateView):
+    form_class = forms.AdForm
+
+
+class AdUpdateView(AdMixin, UpdateView):
+    form_class = forms.AdForm
+
+
+class AdDeleteView(AdMixin, DeleteView):
+    success_url = reverse_lazy("wanted:list")
+
+
+class ContactUsView(FormView):
+    template_name = "contact_us.html"
+    form_class = forms.ContactUsForm
+    success_url = reverse_lazy("wanted:list")
+
+    def form_valid(self, form):
+        # mail.send_email(form.cleaned_data)
+        return super().form_valid(form)
