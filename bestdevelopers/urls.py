@@ -15,7 +15,33 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.http.response import HttpResponse
+
+
+def foo(request):
+    # assert False, "asdljhsak"
+    return HttpResponse("Hello world!")
+
+
+def hello(request, name, age):
+    message = "Hello {} you are {} years old!".format(name, age)
+    return HttpResponse(message)
+
+
+def add(request, a, b):
+    message = "{} + {} = {}".format(a, b, int(a) + int(b))
+    return HttpResponse(message)
+
+
+# /add/10/20/
+# 10 + 20 = 30
 
 urlpatterns = [
+    url(r'^$', foo),
+    url(r'^hello/(?P<name>\w+)/(?P<age>\d+)/$', hello),
+    url(r'^hello/(?P<age>\d+)/(?P<name>\w+)/$', hello),
+    url(r'^hello/(?P<name>\w+)/$', hello, kwargs={'age': 13}),
+    url(r'^hello/$', hello, kwargs={'name':'kuku,', 'age': 13}),
+    url(r'^add/(\d+)/(\d+)/$', add),
     url(r'^admin/', admin.site.urls),
 ]
