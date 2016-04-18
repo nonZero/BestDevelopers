@@ -1,7 +1,7 @@
-import random
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, redirect
+from django.http.response import JsonResponse
 from django.views.generic import FormView
+from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
@@ -24,6 +24,12 @@ class AdMixin:
 class AdListView(AdMixin, ListView):
     paginate_by = 10
 
+class AdJsonView(View):
+    def get(self, request):
+        qs = models.Ad.objects.all()
+        return JsonResponse({'data':[
+            {'id': o.id, 'title': o.title} for o in qs
+        ]})
 
 class AdDetailView(AdMixin, DetailView):
     pass
