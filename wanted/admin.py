@@ -33,3 +33,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Ad, AdAdmin)
 admin.site.register(models.Category, CategoryAdmin)
+admin.site.register(models.Tag)
